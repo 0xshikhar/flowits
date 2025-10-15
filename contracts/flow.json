@@ -1,19 +1,13 @@
 {
 	"contracts": {
+		"AchievementNFT": {
+			"source": "cadence/contracts/AchievementNFT.cdc",
+			"aliases": {
+				"testing": "0000000000000007"
+			}
+		},
 		"ExampleConnectors": {
 			"source": "cadence/contracts/ExampleConnectors.cdc",
-			"aliases": {
-				"testing": "0000000000000007"
-			}
-		},
-		"PredictionMarket": {
-			"source": "cadence/contracts/PredictionMarket.cdc",
-			"aliases": {
-				"testing": "0000000000000007"
-			}
-		},
-		"PredictionActions": {
-			"source": "cadence/contracts/PredictionActions.cdc",
 			"aliases": {
 				"testing": "0000000000000007"
 			}
@@ -24,8 +18,14 @@
 				"testing": "0000000000000007"
 			}
 		},
-		"AchievementNFT": {
-			"source": "cadence/contracts/AchievementNFT.cdc",
+		"PredictionActions": {
+			"source": "cadence/contracts/PredictionActions.cdc",
+			"aliases": {
+				"testing": "0000000000000007"
+			}
+		},
+		"PredictionMarket": {
+			"source": "cadence/contracts/PredictionMarket.cdc",
 			"aliases": {
 				"testing": "0000000000000007"
 			}
@@ -136,6 +136,13 @@
 				"type": "file",
 				"location": "emulator-account.pkey"
 			}
+		},
+		"test-account": {
+			"address": "7782fffb2efed309",
+			"key": {
+				"type": "file",
+				"location": "test-account.pkey"
+			}
 		}
 	},
 	"deployments": {
@@ -149,6 +156,14 @@
 				"PredictionActions",
 				"NFTBattle",
 				"AchievementNFT"
+			]
+		},
+		"testnet": {
+			"emulator-account": [
+				"PredictionMarket",
+				"PredictionActions",
+				"AchievementNFT",
+				"NFTBattle"
 			]
 		}
 	}

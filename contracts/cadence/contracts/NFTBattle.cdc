@@ -26,6 +26,24 @@ access(all) contract NFTBattle {
         access(all) var creatorPool: UFix64
         access(all) var opponentPool: UFix64
         
+        access(contract) fun acceptOpponent(_ addr: Address) {
+            self.opponent = addr
+            self.status = "active"
+        }
+        
+        access(contract) fun updateCreatorPool(_ amount: UFix64) {
+            self.creatorPool = self.creatorPool + amount
+        }
+        
+        access(contract) fun updateOpponentPool(_ amount: UFix64) {
+            self.opponentPool = self.opponentPool + amount
+        }
+        
+        access(contract) fun resolve(_ winnerSide: String) {
+            self.status = "resolved"
+            self.winner = winnerSide
+        }
+        
         init(battleId: UInt64, creator: Address, condition: String, closeTime: UFix64) {
             self.battleId = battleId
             self.creator = creator
@@ -42,12 +60,12 @@ access(all) contract NFTBattle {
     access(all) struct BattleBetData {
         access(all) let side: String
         access(all) let amount: UFix64
-        access(all) var claimed: Bool
+        access(all) let claimed: Bool
         
-        init(side: String, amount: UFix64) {
+        init(side: String, amount: UFix64, claimed: Bool) {
             self.side = side
             self.amount = amount
-            self.claimed = false
+            self.claimed = claimed
         }
     }
     
@@ -68,8 +86,7 @@ access(all) contract NFTBattle {
                 self.info.opponent == nil: "Battle already accepted"
             }
             
-            self.info.opponent = opponent
-            self.info.status = "active"
+            self.info.acceptOpponent(opponent)
             emit BattleAccepted(battleId: self.info.battleId, opponent: opponent)
         }
         
@@ -86,12 +103,12 @@ access(all) contract NFTBattle {
             self.totalPool.deposit(from: <-payment)
             
             if side == "creator" {
-                self.info.creatorPool = self.info.creatorPool + amount
+                self.info.updateCreatorPool(amount)
             } else {
-                self.info.opponentPool = self.info.opponentPool + amount
+                self.info.updateOpponentPool(amount)
             }
             
-            self.bets[user] = BattleBetData(side: side, amount: amount)
+            self.bets[user] = BattleBetData(side: side, amount: amount, claimed: false)
             emit BattleBetPlaced(battleId: self.info.battleId, user: user, side: side, amount: amount)
         }
         
@@ -102,8 +119,7 @@ access(all) contract NFTBattle {
                 getCurrentBlock().timestamp >= self.info.closeTime: "Battle not closed"
             }
             
-            self.info.status = "resolved"
-            self.info.winner = winner
+            self.info.resolve(winner)
             emit BattleResolved(battleId: self.info.battleId, winner: winner)
         }
         
@@ -125,7 +141,7 @@ access(all) contract NFTBattle {
                 emit BattleWinningsClaimed(battleId: self.info.battleId, user: user, amount: userShare)
             }
             
-            self.bets[user]!.claimed = true
+            self.bets[user] = BattleBetData(side: bet.side, amount: bet.amount, claimed: true)
         }
         
         access(all) fun getInfo(): BattleInfo {

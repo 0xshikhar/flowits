@@ -24,6 +24,19 @@ access(all) contract PredictionMarket {
         access(all) var totalYesVolume: UFix64
         access(all) var totalNoVolume: UFix64
         
+        access(contract) fun updateYesVolume(_ amount: UFix64) {
+            self.totalYesVolume = self.totalYesVolume + amount
+        }
+        
+        access(contract) fun updateNoVolume(_ amount: UFix64) {
+            self.totalNoVolume = self.totalNoVolume + amount
+        }
+        
+        access(contract) fun resolve(_ outcome: String) {
+            self.isResolved = true
+            self.winningOutcome = outcome
+        }
+        
         init(marketId: UInt64, creator: Address, question: String, closeTime: UFix64, minStake: UFix64, creatorFeePercent: UFix64) {
             self.marketId = marketId
             self.creator = creator
@@ -41,12 +54,12 @@ access(all) contract PredictionMarket {
     access(all) struct PredictionData {
         access(all) let outcome: String
         access(all) let amount: UFix64
-        access(all) var claimed: Bool
+        access(all) let claimed: Bool
         
-        init(outcome: String, amount: UFix64) {
+        init(outcome: String, amount: UFix64, claimed: Bool) {
             self.outcome = outcome
             self.amount = amount
-            self.claimed = false
+            self.claimed = claimed
         }
     }
     
@@ -74,12 +87,12 @@ access(all) contract PredictionMarket {
             self.totalPool.deposit(from: <-payment)
             
             if outcome == "yes" {
-                self.info.totalYesVolume = self.info.totalYesVolume + amount
+                self.info.updateYesVolume(amount)
             } else {
-                self.info.totalNoVolume = self.info.totalNoVolume + amount
+                self.info.updateNoVolume(amount)
             }
             
-            self.predictions[user] = PredictionData(outcome: outcome, amount: amount)
+            self.predictions[user] = PredictionData(outcome: outcome, amount: amount, claimed: false)
             emit PredictionPlaced(marketId: self.info.marketId, user: user, outcome: outcome, amount: amount)
         }
         
@@ -89,8 +102,7 @@ access(all) contract PredictionMarket {
                 winningOutcome == "yes" || winningOutcome == "no": "Invalid outcome"
             }
             
-            self.info.isResolved = true
-            self.info.winningOutcome = winningOutcome
+            self.info.resolve(winningOutcome)
             emit MarketResolved(marketId: self.info.marketId, winningOutcome: winningOutcome, totalPool: self.totalPool.balance)
         }
         
@@ -114,7 +126,7 @@ access(all) contract PredictionMarket {
                 emit WinningsClaimed(marketId: self.info.marketId, user: user, amount: userShare)
             }
             
-            self.predictions[user]!.claimed = true
+            self.predictions[user] = PredictionData(outcome: prediction.outcome, amount: prediction.amount, claimed: true)
         }
         
         access(all) fun getInfo(): MarketInfo {

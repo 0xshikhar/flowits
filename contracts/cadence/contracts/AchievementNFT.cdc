@@ -119,6 +119,26 @@ access(all) contract AchievementNFT: NonFungibleToken {
         return <-create Collection()
     }
     
+    access(all) view fun getContractViews(resourceType: Type?): [Type] {
+        return [Type<MetadataViews.NFTCollectionData>()]
+    }
+    
+    access(all) fun resolveContractView(resourceType: Type?, viewType: Type): AnyStruct? {
+        switch viewType {
+            case Type<MetadataViews.NFTCollectionData>():
+                return MetadataViews.NFTCollectionData(
+                    storagePath: self.CollectionStoragePath,
+                    publicPath: self.CollectionPublicPath,
+                    publicCollection: Type<&Collection>(),
+                    publicLinkedType: Type<&Collection>(),
+                    createEmptyCollectionFunction: fun(): @{NonFungibleToken.Collection} {
+                        return <-AchievementNFT.createEmptyCollection(nftType: Type<@AchievementNFT.NFT>())
+                    }
+                )
+        }
+        return nil
+    }
+    
     access(all) resource Minter {
         access(all) fun mintAchievement(recipient: &{NonFungibleToken.Receiver}, achievementType: String, name: String, description: String, tier: String) {
             let metadata = AchievementMetadata(achievementType: achievementType, name: name, description: description, tier: tier)

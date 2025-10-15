@@ -1,6 +1,9 @@
 import { fcl, getContractAddress } from "./config"
 import * as t from "@onflow/types"
 
+// Type helper for FCL authorization
+const getAuthz = () => fcl.currentUser.authorization as any
+
 export interface CreateMarketParams {
   question: string
   closeTime: number
@@ -41,9 +44,9 @@ export const createMarket = async (params: CreateMarketParams) => {
       arg(minStake, t.UFix64),
       arg(creatorFeePercent, t.UFix64),
     ],
-    proposer: fcl.currentUser.authorization,
-    payer: fcl.currentUser.authorization,
-    authorizations: [fcl.currentUser.authorization],
+    proposer: getAuthz(),
+    payer: getAuthz(),
+    authorizations: [getAuthz()],
     limit: 999,
   })
 
@@ -81,9 +84,9 @@ export const placePrediction = async (params: PlacePredictionParams) => {
       }
     `,
     args: (arg, t) => [arg(marketId, t.UInt64), arg(outcome, t.String), arg(amount, t.UFix64)],
-    proposer: fcl.currentUser.authorization,
-    payer: fcl.currentUser.authorization,
-    authorizations: [fcl.currentUser.authorization],
+    proposer: getAuthz(),
+    payer: getAuthz(),
+    authorizations: [getAuthz()],
     limit: 999,
   })
 
@@ -116,9 +119,9 @@ export const placePredictionViaAction = async (params: PlacePredictionParams) =>
       }
     `,
     args: (arg, t) => [arg(marketId, t.UInt64), arg(outcome, t.String), arg(amount, t.UFix64)],
-    proposer: fcl.currentUser.authorization,
-    payer: fcl.currentUser.authorization,
-    authorizations: [fcl.currentUser.authorization],
+    proposer: getAuthz(),
+    payer: getAuthz(),
+    authorizations: [getAuthz()],
     limit: 999,
   })
 
@@ -151,9 +154,9 @@ export const claimWinnings = async (marketId: number) => {
       }
     `,
     args: (arg, t) => [arg(marketId, t.UInt64)],
-    proposer: fcl.currentUser.authorization,
-    payer: fcl.currentUser.authorization,
-    authorizations: [fcl.currentUser.authorization],
+    proposer: getAuthz(),
+    payer: getAuthz(),
+    authorizations: [getAuthz()],
     limit: 999,
   })
 
