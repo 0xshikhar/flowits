@@ -5,6 +5,30 @@
 			"aliases": {
 				"testing": "0000000000000007"
 			}
+		},
+		"PredictionMarket": {
+			"source": "cadence/contracts/PredictionMarket.cdc",
+			"aliases": {
+				"testing": "0000000000000007"
+			}
+		},
+		"PredictionActions": {
+			"source": "cadence/contracts/PredictionActions.cdc",
+			"aliases": {
+				"testing": "0000000000000007"
+			}
+		},
+		"NFTBattle": {
+			"source": "cadence/contracts/NFTBattle.cdc",
+			"aliases": {
+				"testing": "0000000000000007"
+			}
+		},
+		"AchievementNFT": {
+			"source": "cadence/contracts/AchievementNFT.cdc",
+			"aliases": {
+				"testing": "0000000000000007"
+			}
 		}
 	},
 	"dependencies": {
@@ -120,7 +144,11 @@
 				"DeFiActionsMathUtils",
 				"DeFiActionsUtils",
 				"DeFiActions",
-				"ExampleConnectors"
+				"ExampleConnectors",
+				"PredictionMarket",
+				"PredictionActions",
+				"NFTBattle",
+				"AchievementNFT"
 			]
 		}
 	}
