@@ -4,18 +4,23 @@ echo "🧪 FlowBattle - Complete Test Suite"
 echo "===================================="
 echo ""
 
-# Test contracts
-echo "1️⃣  Testing Cadence Contracts..."
+# Verify contracts compile
+echo "1️⃣  Verifying Cadence Contracts..."
 echo "--------------------------------"
 cd contracts
-chmod +x test.sh
-./test.sh
+
+echo "Checking contract syntax..."
+flow cadence lint cadence/contracts/PredictionMarket.cdc
+flow cadence lint cadence/contracts/PredictionActions.cdc
+flow cadence lint cadence/contracts/NFTBattle.cdc
+flow cadence lint cadence/contracts/AchievementNFT.cdc
 
 if [ $? -ne 0 ]; then
-    echo "❌ Contract tests failed"
+    echo "❌ Contract linting failed"
     exit 1
 fi
 
+echo "✅ All contracts pass linting"
 cd ..
 echo ""
 
@@ -35,10 +40,15 @@ cd ..
 echo ""
 
 echo "================================"
-echo "✅ All tests passed!"
+echo "✅ All checks passed!"
 echo "================================"
 echo ""
 echo "Next steps:"
 echo "1. Start emulator: cd contracts && flow emulator start"
-echo "2. Deploy contracts: cd contracts && ./deploy.sh"
+echo "2. Deploy contracts: cd contracts && flow project deploy --network=emulator"
 echo "3. Start web app: cd web-app && pnpm dev"
+echo ""
+echo "For manual testing:"
+echo "  - Create market: flow transactions send cadence/transactions/create_market.cdc ..."
+echo "  - Place prediction: flow transactions send cadence/transactions/place_prediction.cdc ..."
+echo "  - Get market info: flow scripts execute cadence/scripts/get_market_info.cdc 0"

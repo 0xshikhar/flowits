@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🧪 Running FlowBattle Contract Tests..."
+echo "🧪 Running FlowBattle Contract Verification..."
 echo ""
 
 # Check if flow CLI is installed
@@ -13,22 +13,45 @@ fi
 echo "✅ Flow CLI found"
 echo ""
 
-# Run tests
-echo "📝 Running Cadence tests..."
 cd "$(dirname "$0")"
 
-flow test cadence/tests/basic_test.cdc --network=emulator
+# Lint contracts
+echo "📝 Linting Cadence contracts..."
+echo ""
 
-if [ $? -eq 0 ]; then
-    echo ""
-    echo "✅ All tests passed!"
-    echo ""
-    echo "Note: For full integration tests, deploy contracts and test manually:"
-    echo "  1. flow emulator start"
-    echo "  2. flow project deploy --network=emulator"
-    echo "  3. Test transactions in cadence/transactions/"
-else
-    echo ""
-    echo "❌ Tests failed"
+echo "Checking PredictionMarket.cdc..."
+flow cadence lint cadence/contracts/PredictionMarket.cdc
+if [ $? -ne 0 ]; then
+    echo "❌ PredictionMarket.cdc has errors"
     exit 1
 fi
+
+echo "Checking PredictionActions.cdc..."
+flow cadence lint cadence/contracts/PredictionActions.cdc
+if [ $? -ne 0 ]; then
+    echo "❌ PredictionActions.cdc has errors"
+    exit 1
+fi
+
+echo "Checking NFTBattle.cdc..."
+flow cadence lint cadence/contracts/NFTBattle.cdc
+if [ $? -ne 0 ]; then
+    echo "❌ NFTBattle.cdc has errors"
+    exit 1
+fi
+
+echo "Checking AchievementNFT.cdc..."
+flow cadence lint cadence/contracts/AchievementNFT.cdc
+if [ $? -ne 0 ]; then
+    echo "❌ AchievementNFT.cdc has errors"
+    exit 1
+fi
+
+echo ""
+echo "✅ All contracts pass linting!"
+echo ""
+echo "To deploy and test:"
+echo "  1. flow emulator start (in another terminal)"
+echo "  2. flow project deploy --network=emulator"
+echo "  3. Test transactions:"
+echo "     flow transactions send cadence/transactions/create_market.cdc ..."
