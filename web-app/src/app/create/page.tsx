@@ -59,43 +59,37 @@ export default function CreatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b-4 border-purple-200 shadow-lg">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link href="/feed">
-                <Button variant="ghost" size="icon" className="border-2 border-purple-200">
-                  <ArrowLeft className="h-5 w-5" />
-                </Button>
-              </Link>
-              <h1 className="text-2xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Create Prediction
-              </h1>
+    <div className="min-h-screen bg-gray-50">
+      <main className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="mb-8 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link href="/feed">
+              <Button variant="outline" size="icon" className="border-2 border-gray-300 hover:border-green-500 hover:bg-green-50">
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+            </Link>
+            <div>
+              <h1 className="text-4xl font-black text-gray-900">Create Market</h1>
+              <p className="text-gray-600 font-medium">Launch your prediction and earn fees</p>
             </div>
-            <WalletConnect />
           </div>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 pb-32">
-        <div className="max-w-2xl mx-auto">
-          <Card className="border-4 border-purple-200 shadow-2xl bg-white p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Question */}
-              <div className="space-y-2">
-                <Label htmlFor="question" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-purple-500" />
-                  Prediction Question
-                </Label>
-                <Textarea
-                  id="question"
-                  value={formData.question}
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <Card className="square-box-green p-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="question" className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-green-600" />
+                    Prediction Question
+                  </Label>
+                  <Textarea
+                    id="question"
+                    value={formData.question}
                   onChange={(e) => setFormData({ ...formData, question: e.target.value })}
                   placeholder="e.g., Will LeBron score 40+ points tonight vs Celtics?"
-                  className="min-h-24 text-lg border-2 border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                  className="min-h-24 text-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200"
                   required
                 />
                 <p className="text-sm text-gray-500">Make it clear and specific!</p>
@@ -104,10 +98,10 @@ export default function CreatePage() {
               {/* Media Upload */}
               <div className="space-y-2">
                 <Label htmlFor="media" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Upload className="h-5 w-5 text-purple-500" />
+                  <Upload className="h-5 w-5 text-green-600" />
                   Upload Image/Video (Optional)
                 </Label>
-                <div className="border-4 border-dashed border-purple-200 rounded-xl p-8 text-center hover:border-purple-400 transition-colors cursor-pointer bg-purple-50/50">
+                <div className="border-4 border-dashed border-green-200 rounded-lg p-8 text-center hover:border-green-400 transition-colors cursor-pointer bg-green-50">
                   <input
                     id="media"
                     type="file"
@@ -118,8 +112,8 @@ export default function CreatePage() {
                   <label htmlFor="media" className="cursor-pointer">
                     {formData.mediaFile ? (
                       <div className="space-y-2">
-                        <Upload className="h-12 w-12 mx-auto text-purple-500" />
-                        <p className="font-semibold text-purple-600">{formData.mediaFile.name}</p>
+                        <Upload className="h-12 w-12 mx-auto text-green-600" />
+                        <p className="font-semibold text-green-600">{formData.mediaFile.name}</p>
                         <p className="text-sm text-gray-500">Click to change</p>
                       </div>
                     ) : (
@@ -136,7 +130,7 @@ export default function CreatePage() {
               {/* Close Time */}
               <div className="space-y-2">
                 <Label htmlFor="closeTime" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-purple-500" />
+                  <Calendar className="h-5 w-5 text-green-600" />
                   Close Time
                 </Label>
                 <Input
@@ -144,7 +138,7 @@ export default function CreatePage() {
                   type="datetime-local"
                   value={formData.closeTime}
                   onChange={(e) => setFormData({ ...formData, closeTime: e.target.value })}
-                  className="text-lg border-2 border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                  className="text-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200"
                   required
                 />
                 <p className="text-sm text-gray-500">When should predictions close?</p>
@@ -153,7 +147,7 @@ export default function CreatePage() {
               {/* Min Stake */}
               <div className="space-y-2">
                 <Label htmlFor="minStake" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Coins className="h-5 w-5 text-purple-500" />
+                  <Coins className="h-5 w-5 text-green-600" />
                   Minimum Stake (FLOW)
                 </Label>
                 <Input
@@ -163,7 +157,7 @@ export default function CreatePage() {
                   min="0.1"
                   value={formData.minStake}
                   onChange={(e) => setFormData({ ...formData, minStake: e.target.value })}
-                  className="text-lg border-2 border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                  className="text-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200"
                   required
                 />
                 <p className="text-sm text-gray-500">Minimum amount users can bet</p>
@@ -172,7 +166,7 @@ export default function CreatePage() {
               {/* Creator Fee */}
               <div className="space-y-2">
                 <Label htmlFor="creatorFee" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Percent className="h-5 w-5 text-purple-500" />
+                  <Percent className="h-5 w-5 text-green-600" />
                   Creator Fee (%)
                 </Label>
                 <Input
@@ -183,16 +177,16 @@ export default function CreatePage() {
                   max="20"
                   value={formData.creatorFee}
                   onChange={(e) => setFormData({ ...formData, creatorFee: e.target.value })}
-                  className="text-lg border-2 border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                  className="text-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200"
                   required
                 />
                 <p className="text-sm text-gray-500">Your earnings from total pool (max 20%)</p>
               </div>
 
               {/* Estimated Earnings */}
-              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-300 rounded-xl p-4">
+              <div className="bg-green-50 border-2 border-green-300 rounded-lg p-4">
                 <p className="text-sm text-gray-600 mb-1">Estimated earnings (if pool reaches 100 FLOW):</p>
-                <p className="text-3xl font-bold text-yellow-700">
+                <p className="text-3xl font-bold text-green-700">
                   {(100 * parseFloat(formData.creatorFee) / 100).toFixed(2)} FLOW
                 </p>
               </div>
@@ -201,7 +195,7 @@ export default function CreatePage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full h-16 text-xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                className="w-full h-16 text-xl font-black bg-green-500 hover:bg-green-600 text-white shadow-lg hover:shadow-xl neon-glow transition-all duration-200 rounded-lg"
               >
                 {loading ? (
                   "Creating Market..."
@@ -214,28 +208,45 @@ export default function CreatePage() {
               </Button>
             </form>
           </Card>
+          </div>
 
-          {/* Tips */}
-          <div className="mt-6 bg-white/80 backdrop-blur-sm border-2 border-purple-200 rounded-xl p-6">
-            <h3 className="font-bold text-lg text-gray-900 mb-3">💡 Tips for Success</h3>
+          {/* Tips Sidebar */}
+          <div className="lg:col-span-1 space-y-4">
+            <div className="square-box p-6">
+              <h3 className="font-bold text-xl text-gray-900 mb-4">💡 Tips</h3>
             <ul className="space-y-2 text-sm text-gray-700">
               <li className="flex items-start gap-2">
-                <span className="text-purple-500 font-bold">•</span>
+                <span className="text-green-500 font-bold">✓</span>
                 <span>Make questions clear and verifiable (sports stats work best!)</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-purple-500 font-bold">•</span>
+                <span className="text-green-500 font-bold">✓</span>
                 <span>Set close time before the event happens</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-purple-500 font-bold">•</span>
+                <span className="text-green-500 font-bold">✓</span>
                 <span>Lower min stake = more participants</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-purple-500 font-bold">•</span>
+                <span className="text-green-500 font-bold">✓</span>
                 <span>Add engaging media to attract more bets</span>
               </li>
             </ul>
+            </div>
+
+            <div className="square-box p-6">
+              <h3 className="font-bold text-xl text-gray-900 mb-4">📊 Preview</h3>
+              <div className="space-y-3">
+                <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-200">
+                  <p className="text-xs text-gray-600">Min Stake</p>
+                  <p className="text-lg font-bold text-green-600">{formData.minStake} FLOW</p>
+                </div>
+                <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-200">
+                  <p className="text-xs text-gray-600">Creator Fee</p>
+                  <p className="text-lg font-bold text-green-600">{formData.creatorFee}%</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>

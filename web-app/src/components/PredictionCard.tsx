@@ -64,59 +64,63 @@ export function PredictionCard({
   }
 
   return (
-    <Card className="overflow-hidden border-2 border-border shadow-2xl gradient-card hover-lift">
+    <Card className="overflow-hidden square-box-green hover-lift">
       {/* Media Section */}
       {mediaUrl && (
-        <div className="relative h-72 bg-gradient-to-br from-orange-100 to-amber-100">
+        <div className="relative h-80 bg-gray-100">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={mediaUrl} alt="Prediction" className="w-full h-full object-cover opacity-90" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+          <img src={mediaUrl} alt="Prediction" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           <div className="absolute top-4 right-4">
-            <Badge className="glass border-2 border-amber-300 text-foreground font-bold shadow-lg">
-              <Coins className="mr-1 h-4 w-4 text-amber-600" />
-              {totalVolume.toFixed(0)} FLOW Pool
+            <Badge className="bg-green-500 text-white border-2 border-green-400 font-bold shadow-lg neon-glow">
+              <Coins className="mr-1 h-4 w-4" />
+              {totalVolume.toFixed(0)} FLOW
             </Badge>
           </div>
         </div>
       )}
 
       {/* Content Section */}
-      <div className="p-6 space-y-4">
+      <div className="p-6 space-y-5">
         {/* Question */}
         <div>
-          <h3 className="text-2xl font-bold text-foreground mb-2 leading-tight">{question}</h3>
-          <p className="text-sm text-muted-foreground">
-            by <span className="font-semibold text-gradient">{creator.slice(0, 8)}...</span>
+          <h3 className="text-2xl font-black text-gray-900 mb-2 leading-tight">{question}</h3>
+          <p className="text-sm text-gray-600">
+            by <span className="font-bold text-green-600">{creator.slice(0, 8)}...</span>
           </p>
         </div>
 
         {/* Time & Stats */}
-        <div className="flex items-center gap-4 text-sm">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 border border-orange-300">
-            <Clock className="h-4 w-4 text-orange-600" />
-            <span className="font-bold text-orange-900">{hoursLeft}h {minutesLeft}m</span>
+        <div className="flex items-center gap-3 text-sm">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-50 border-2 border-green-300">
+            <Clock className="h-4 w-4 text-green-600" />
+            <span className="font-bold text-green-900">{hoursLeft}h {minutesLeft}m</span>
           </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary border border-border">
-            <Users className="h-4 w-4 text-muted-foreground" />
-            <span className="font-semibold text-foreground">{Math.floor(totalVolume / parseFloat(minStake))}</span>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border-2 border-gray-300">
+            <Users className="h-4 w-4 text-gray-600" />
+            <span className="font-bold text-gray-900">{Math.floor(totalVolume / parseFloat(minStake))}</span>
           </div>
         </div>
 
         {/* Odds Display */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex justify-between text-sm font-bold">
-            <span className="text-green-700">YES {yesPercent.toFixed(0)}%</span>
-            <span className="text-red-700">NO {noPercent.toFixed(0)}%</span>
+            <span className="text-green-600">YES {yesPercent.toFixed(0)}%</span>
+            <span className="text-red-600">NO {noPercent.toFixed(0)}%</span>
           </div>
-          <div className="h-4 bg-muted rounded-full overflow-hidden flex shadow-inner">
+          <div className="h-6 bg-gray-200 rounded-lg overflow-hidden flex border-2 border-gray-300">
             <div
-              className="bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-500"
+              className="bg-green-500 transition-all duration-500 flex items-center justify-center text-white text-xs font-bold"
               style={{ width: `${yesPercent}%` }}
-            />
+            >
+              {yesPercent > 15 && `${yesPercent.toFixed(0)}%`}
+            </div>
             <div
-              className="bg-gradient-to-r from-red-500 to-rose-500 transition-all duration-500"
+              className="bg-red-500 transition-all duration-500 flex items-center justify-center text-white text-xs font-bold"
               style={{ width: `${noPercent}%` }}
-            />
+            >
+              {noPercent > 15 && `${noPercent.toFixed(0)}%`}
+            </div>
           </div>
         </div>
 
@@ -124,55 +128,55 @@ export function PredictionCard({
         <div className="grid grid-cols-2 gap-4">
           <Button
             onClick={() => setSelectedOutcome("yes")}
-            className={`h-16 text-lg font-bold transition-all duration-200 rounded-2xl ${
+            className={`h-20 text-xl font-black transition-all duration-200 rounded-lg ${
               selectedOutcome === "yes"
-                ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white scale-105 shadow-xl border-2 border-green-600"
-                : "bg-green-50 text-green-700 hover:bg-green-100 border-2 border-green-300 hover:border-green-400"
+                ? "bg-green-500 text-white scale-105 shadow-xl neon-glow border-2 border-green-400"
+                : "bg-white text-green-600 hover:bg-green-50 border-2 border-green-500 shadow-lg"
             }`}
           >
-            <ThumbsUp className="mr-2 h-6 w-6" />
+            <ThumbsUp className="mr-2 h-7 w-7" />
             YES
           </Button>
           <Button
             onClick={() => setSelectedOutcome("no")}
-            className={`h-16 text-lg font-bold transition-all duration-200 rounded-2xl ${
+            className={`h-20 text-xl font-black transition-all duration-200 rounded-lg ${
               selectedOutcome === "no"
-                ? "bg-gradient-to-r from-red-500 to-rose-500 text-white scale-105 shadow-xl border-2 border-red-600"
-                : "bg-red-50 text-red-700 hover:bg-red-100 border-2 border-red-300 hover:border-red-400"
+                ? "bg-red-500 text-white scale-105 shadow-xl border-2 border-red-400"
+                : "bg-white text-red-600 hover:bg-red-50 border-2 border-red-500 shadow-lg"
             }`}
           >
-            <ThumbsDown className="mr-2 h-6 w-6" />
+            <ThumbsDown className="mr-2 h-7 w-7" />
             NO
           </Button>
         </div>
 
         {/* Amount Input */}
         {selectedOutcome && (
-          <div className="space-y-3 animate-slide-up">
-            <div className="flex items-center gap-3 glass p-4 rounded-2xl border-2 border-border">
+          <div className="space-y-4 animate-slide-up">
+            <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg border-2 border-gray-300">
               <input
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 min={minStake}
                 step="0.1"
-                className="flex-1 px-4 py-3 bg-background border-2 border-border rounded-xl font-bold text-lg focus:border-orange-400 focus:ring-2 focus:ring-orange-200 outline-none transition-all"
+                className="flex-1 px-4 py-3 bg-white border-2 border-gray-300 rounded-lg font-bold text-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
                 placeholder="Amount"
               />
-              <span className="font-bold text-gradient text-lg">FLOW</span>
+              <span className="font-black text-green-600 text-lg">FLOW</span>
             </div>
 
             <Button
               onClick={handlePredict}
               disabled={loading}
-              className="w-full h-14 text-lg font-bold bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-xl hover:shadow-2xl transition-all duration-200 rounded-2xl"
+              className="w-full h-16 text-xl font-black bg-green-500 hover:bg-green-600 text-white shadow-xl hover:shadow-2xl neon-glow transition-all duration-200 rounded-lg"
             >
               {loading ? (
                 "Placing Prediction..."
               ) : (
                 <>
-                  <TrendingUp className="mr-2 h-5 w-5" />
-                  Place {amount} FLOW on {selectedOutcome.toUpperCase()}
+                  <TrendingUp className="mr-2 h-6 w-6" />
+                  Bet {amount} FLOW on {selectedOutcome.toUpperCase()}
                 </>
               )}
             </Button>
@@ -180,8 +184,8 @@ export function PredictionCard({
         )}
 
         {/* Min Stake Info */}
-        <p className="text-xs text-center text-muted-foreground">
-          Minimum stake: <span className="font-bold text-gradient">{minStake} FLOW</span>
+        <p className="text-sm text-center text-gray-600">
+          Minimum stake: <span className="font-bold text-green-600">{minStake} FLOW</span>
         </p>
       </div>
     </Card>

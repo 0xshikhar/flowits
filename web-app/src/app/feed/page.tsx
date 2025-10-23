@@ -68,130 +68,126 @@ export default function FeedPage() {
   const currentMarket = mockMarkets[currentIndex]
 
   return (
-    <div className="min-h-screen gradient-warm">
-      {/* Header */}
-      <header className="sticky top-0 z-50 glass border-b-2 border-border">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 bg-gradient-to-br from-orange-400 to-amber-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <Trophy className="h-7 w-7 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-black text-gradient">
-                  Moments
-                </h1>
-                <p className="text-xs text-muted-foreground font-medium">Prediction Markets</p>
-              </div>
-            </div>
-
-            <WalletConnect />
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-gray-50">
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto space-y-6">
-          {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-4 animate-slide-up">
-            <div className="glass rounded-2xl p-5 hover-lift text-center border-2 border-orange-200">
-              <p className="text-3xl font-bold text-gradient">{mockMarkets.length}</p>
-              <p className="text-sm text-muted-foreground font-semibold mt-1">Active Markets</p>
+      <main className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-black text-gray-900 mb-2">Live Predictions</h1>
+          <p className="text-gray-600 font-medium">Swipe through markets and place your bets</p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Stats Sidebar */}
+          <div className="lg:col-span-1 space-y-4">
+            <div className="square-box-green p-6 hover-lift">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center neon-glow">
+                  <Trophy className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 font-semibold">Active Markets</p>
+                  <p className="text-3xl font-black text-gray-900">{mockMarkets.length}</p>
+                </div>
+              </div>
             </div>
-            <div className="glass rounded-2xl p-5 hover-lift text-center border-2 border-green-200">
-              <p className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                {mockMarkets.reduce((sum, m) => sum + parseFloat(m.totalYesVolume) + parseFloat(m.totalNoVolume), 0).toFixed(0)}
+
+            <div className="square-box p-6 hover-lift">
+              <p className="text-sm text-gray-600 font-semibold mb-2">Total Volume</p>
+              <p className="text-3xl font-black text-gradient-green">
+                {mockMarkets.reduce((sum, m) => sum + parseFloat(m.totalYesVolume) + parseFloat(m.totalNoVolume), 0).toFixed(1)} FLOW
               </p>
-              <p className="text-sm text-muted-foreground font-semibold mt-1">Total FLOW</p>
             </div>
-            <div className="glass rounded-2xl p-5 hover-lift text-center border-2 border-amber-200">
-              <p className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">{currentIndex + 1}/{mockMarkets.length}</p>
-              <p className="text-sm text-muted-foreground font-semibold mt-1">Current</p>
+
+            <div className="square-box p-6 hover-lift">
+              <p className="text-sm text-gray-600 font-semibold mb-2">Your Position</p>
+              <p className="text-2xl font-bold text-gray-900">{currentIndex + 1} / {mockMarkets.length}</p>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="square-box p-6">
+              <h3 className="font-bold text-gray-900 mb-4">Quick Actions</h3>
+              <div className="space-y-2">
+                <Link href="/create">
+                  <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold shadow-lg neon-glow">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Create Market
+                  </Button>
+                </Link>
+                <Link href="/profile">
+                  <Button variant="outline" className="w-full border-2 border-gray-300 hover:border-green-400 hover:bg-green-50 font-bold">
+                    <User className="mr-2 h-4 w-4" />
+                    View Profile
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
 
-          {/* Card Container */}
-          <div className="relative">
-            <div
-              className={`transition-all duration-300 ${
-                direction === "left"
-                  ? "translate-x-[-100px] opacity-0"
-                  : direction === "right"
-                    ? "translate-x-[100px] opacity-0"
-                    : "translate-x-0 opacity-100"
-              }`}
-            >
-              <PredictionCard {...currentMarket} />
+          {/* Main Card Area */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Card Container */}
+            <div className="relative">
+              <div
+                className={`transition-all duration-300 ${
+                  direction === "left"
+                    ? "translate-x-[-100px] opacity-0"
+                    : direction === "right"
+                      ? "translate-x-[100px] opacity-0"
+                      : "translate-x-0 opacity-100"
+                }`}
+              >
+                <PredictionCard {...currentMarket} />
+              </div>
             </div>
 
-            {/* Navigation Buttons */}
-            <div className="flex justify-center gap-4 mt-6">
+            {/* Navigation */}
+            <div className="flex justify-between items-center">
               <Button
                 onClick={handlePrevious}
                 disabled={currentIndex === 0}
                 size="lg"
-                className="glass border-2 border-border hover:bg-secondary disabled:opacity-30 shadow-lg hover-lift font-semibold"
+                variant="outline"
+                className="border-2 border-gray-300 hover:border-green-500 hover:bg-green-50 disabled:opacity-30 font-bold px-8"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Previous
               </Button>
 
+              {/* Progress Dots */}
+              <div className="flex gap-2">
+                {mockMarkets.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                      idx === currentIndex
+                        ? "w-8 bg-green-500 shadow-lg"
+                        : "w-3 bg-gray-300 hover:bg-gray-400"
+                    }`}
+                    onClick={() => {
+                      setDirection(idx > currentIndex ? "right" : "left")
+                      setTimeout(() => {
+                        setCurrentIndex(idx)
+                        setDirection(null)
+                      }, 300)
+                    }}
+                  />
+                ))}
+              </div>
+
               <Button
                 onClick={handleNext}
                 disabled={currentIndex === mockMarkets.length - 1}
                 size="lg"
-                className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white disabled:opacity-30 shadow-xl hover-lift font-bold"
+                className="bg-green-500 hover:bg-green-600 text-white disabled:opacity-30 font-bold px-8 neon-glow"
               >
                 Next
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
           </div>
-
-          {/* Progress Indicator */}
-          <div className="flex justify-center gap-2">
-            {mockMarkets.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  idx === currentIndex
-                    ? "w-8 bg-gradient-to-r from-orange-500 to-amber-500 shadow-md"
-                    : "w-2 bg-muted"
-                }`}
-              />
-            ))}
-          </div>
         </div>
       </main>
-
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 glass border-t-2 border-border shadow-2xl pb-safe">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-around py-3">
-            <Link href="/feed">
-              <Button variant="ghost" className="flex-col h-auto gap-1 text-orange-600 hover:bg-orange-50">
-                <Trophy className="h-6 w-6" />
-                <span className="text-xs font-semibold">Feed</span>
-              </Button>
-            </Link>
-            <Link href="/create">
-              <Button variant="ghost" className="flex-col h-auto gap-1 hover:bg-transparent">
-                <div className="h-14 w-14 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center -mt-8 shadow-xl border-4 border-background hover:shadow-2xl transition-all hover:scale-105">
-                  <Plus className="h-7 w-7 text-white" />
-                </div>
-                <span className="text-xs font-semibold mt-1">Create</span>
-              </Button>
-            </Link>
-            <Link href="/profile">
-              <Button variant="ghost" className="flex-col h-auto gap-1 hover:bg-secondary">
-                <User className="h-6 w-6" />
-                <span className="text-xs font-semibold">Profile</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
     </div>
   )
 }

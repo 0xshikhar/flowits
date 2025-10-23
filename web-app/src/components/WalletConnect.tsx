@@ -38,11 +38,14 @@ export function WalletConnect() {
     setLoading(true)
     try {
       console.log('🔐 Attempting to connect wallet...')
-      await fcl.authenticate()
-      console.log('✅ Wallet connected successfully')
-    } catch (error) {
+      const result = await fcl.authenticate()
+      console.log('✅ Wallet authentication result:', result)
+    } catch (error: any) {
       console.error("❌ Connection error:", error)
-      alert('Failed to connect wallet. Please try again.')
+      // Only show error if it's not a user cancellation
+      if (error?.message && !error.message.includes('Declined') && !error.message.includes('Halted')) {
+        alert('Failed to connect wallet. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
@@ -57,24 +60,24 @@ export function WalletConnect() {
       <Button
         onClick={connect}
         disabled={loading}
-        className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-0.5 rounded-xl"
+        className="bg-[#a4ff31] hover:bg-[#b8ff52] text-black font-bold shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg neon-glow border-2 border-[#a4ff31]"
       >
         <Wallet className="mr-2 h-4 w-4" />
-        {loading ? "Connecting..." : "Connect Wallet"}
+        {loading ? "Connecting..." : "Connect"}
       </Button>
     )
   }
 
   return (
-    <div className="flex items-center gap-2 md:gap-3">
-      <div className="flex items-center gap-2 glass px-3 py-2 rounded-xl border-2 border-amber-200 shadow-md">
-        <Coins className="h-4 w-4 text-amber-600" />
-        <span className="font-bold text-foreground">{balance} FLOW</span>
+    <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 bg-[#e8ffe0] px-3 py-2 rounded-lg border-2 border-[#a4ff31] shadow-md">
+        <Coins className="h-4 w-4 text-black" />
+        <span className="font-bold text-black text-sm">{balance}</span>
       </div>
       
-      <div className="hidden sm:flex items-center gap-2 glass px-3 py-2 rounded-xl border-2 border-border shadow-md">
-        <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
-        <span className="font-mono text-sm text-foreground">
+      <div className="hidden sm:flex items-center gap-2 bg-white px-3 py-2 rounded-lg border-2 border-gray-300 shadow-md">
+        <div className="h-2 w-2 bg-[#a4ff31] rounded-full animate-pulse" />
+        <span className="font-mono text-xs text-gray-700">
           {user.addr?.slice(0, 6)}...{user.addr?.slice(-4)}
         </span>
       </div>
@@ -83,7 +86,7 @@ export function WalletConnect() {
         onClick={disconnect}
         variant="outline"
         size="icon"
-        className="border-2 border-border hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-xl"
+        className="border-2 border-gray-300 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg"
       >
         <LogOut className="h-4 w-4 text-red-600" />
       </Button>
