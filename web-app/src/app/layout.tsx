@@ -6,7 +6,8 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Providers } from "@/app/providers"
-import Navbar from "@/components/navigation/navbar"
+import Sidebar from "@/components/navigation/sidebar"
+import { WalletConnect } from "@/components/WalletConnect"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -68,12 +69,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background antialiased flex flex-col",
-          inter.className
-        )}
-      >
+      <body className={cn("bg-white min-h-screen", inter.className)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -82,9 +78,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
           forcedTheme="light"
         >
           <Providers>
-            <main className="flex-1">
-              {children}
-            </main>
+            <div className="flex border border-gray-400 shadow-lg min-h-screen m-3 md:m-6">
+              <Sidebar />
+              <div className="flex-1 flex flex-col">
+                {/* Header */}
+                <header className="border-b border-gray-400 bg-white p-4 flex justify-end items-center">
+                  <WalletConnect />
+                </header>
+                
+                {/* Main Content */}
+                <main className="flex-1 overflow-y-auto border-l border-gray-400 bg-gradient-to-b from-[#FFFEE8] to-[#F6FCE5]">
+                  {children}
+                </main>
+              </div>
+            </div>
           </Providers>
         </ThemeProvider>
       </body>

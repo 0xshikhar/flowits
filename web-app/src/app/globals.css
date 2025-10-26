@@ -91,13 +91,13 @@
 }
 
 @layer components {
-  /* Square card boxes */
-  .square-box {
-    @apply bg-white border-2 border-gray-200 shadow-lg rounded-lg;
+  /* Block-based card system */
+  .block-card {
+    @apply bg-white border border-gray-300 shadow-lg rounded-none;
   }
   
-  .square-box-green {
-    @apply bg-white border-2 border-green-500 shadow-lg shadow-green-500/20 rounded-lg;
+  .block-card-primary {
+    @apply bg-white border border-[#00EF8C] shadow-lg shadow-[#00EF8C]/10 rounded-none;
   }
   
   /* Gradient backgrounds - Neon Green #a4ff31 */
@@ -108,6 +108,10 @@
   .gradient-green-light {
     background: linear-gradient(135deg, #e8ffe0 0%, #d4ffb8 100%);
   }
+  .gradient-warm {
+    background: linear-gradient(180deg, #FFFEE8 0%, #F6FCE5 100%);
+  }
+  
   
   /* Animated gradient border */
   .gradient-border-green {
@@ -136,6 +140,11 @@
     box-shadow: 0 0 15px rgba(164, 255, 49, 0.6),
                 0 0 30px rgba(164, 255, 49, 0.4),
                 0 0 45px rgba(164, 255, 49, 0.2);
+  }
+  /* Glow effect - #00EF8C */
+  .glow-green {
+    box-shadow: 0 0 15px rgba(0, 239, 140, 0.4),
+                0 0 30px rgba(0, 239, 140, 0.2);
   }
   
   /* Custom scrollbar */

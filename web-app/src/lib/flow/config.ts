@@ -49,6 +49,14 @@ if (typeof window !== 'undefined') {
         ? "https://rest-testnet.onflow.org"
         : "http://localhost:8888"
 
+  const discoveryWallet = FLOW_NETWORK === "mainnet" 
+    ? "https://fcl-discovery.onflow.org/authn"
+    : "https://fcl-discovery.onflow.org/testnet/authn"
+  
+  const discoveryAuthnEndpoint = FLOW_NETWORK === "mainnet"
+    ? "https://fcl-discovery.onflow.org/api/authn"
+    : "https://fcl-discovery.onflow.org/api/testnet/authn"
+
   fcl.config()
     .put("app.detail.title", "Moments - Sports Prediction Markets")
     .put("app.detail.description", "Swipe. Predict. Battle. Win.")
@@ -56,9 +64,10 @@ if (typeof window !== 'undefined') {
     .put("flow.network", FLOW_NETWORK)
     .put("accessNode.api", accessNodeApi)
     .put("fcl.limit", 9999)
-    // Direct wallet configuration to avoid CORS
-    .put("discovery.wallet", `https://fcl-discovery.onflow.org/${FLOW_NETWORK === "mainnet" ? "" : "testnet/"}authn`)
-    .put("discovery.wallet.method", "IFRAME/RPC")
+    .put("discovery.wallet", discoveryWallet)
+    .put("discovery.authn.endpoint", discoveryAuthnEndpoint)
+    .put("discovery.authn.include", [])
+    .put("challenge.handshake", discoveryWallet)
     .put('walletconnect.projectId', 'BDMpT0l7Iq0IXVYYAMQZtbBBF_Ey4Tu6es2i8fkhCRYRc9c0jpawZFLOH1wkdTN_S31hHNY4I7F9nEHlE_0SCC8')
   
   if (process.env.NODE_ENV === 'development') {

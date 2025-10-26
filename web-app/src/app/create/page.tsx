@@ -59,12 +59,12 @@ export default function CreatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen p-6 md:p-10">
+      <main className="max-w-6xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/feed">
-              <Button variant="outline" size="icon" className="border-2 border-gray-300 hover:border-green-500 hover:bg-green-50">
+              <Button variant="outline" size="icon" className="border border-gray-400 hover:border-[#00EF8C] hover:bg-[#E6FFF8]">
                 <ArrowLeft className="h-5 w-5" />
               </Button>
             </Link>
@@ -77,11 +77,11 @@ export default function CreatePage() {
 
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <Card className="square-box-green p-8">
+            <Card className="block-card-primary p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="question" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-green-600" />
+                    <Sparkles className="h-5 w-5 text-[#00EF8C]" />
                     Prediction Question
                   </Label>
                   <Textarea
@@ -89,7 +89,7 @@ export default function CreatePage() {
                     value={formData.question}
                   onChange={(e) => setFormData({ ...formData, question: e.target.value })}
                   placeholder="e.g., Will LeBron score 40+ points tonight vs Celtics?"
-                  className="min-h-24 text-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                  className="min-h-24 text-lg border border-gray-300 focus:border-[#00EF8C] focus:ring-2 focus:ring-[#00EF8C]/20"
                   required
                 />
                 <p className="text-sm text-gray-500">Make it clear and specific!</p>
@@ -98,10 +98,10 @@ export default function CreatePage() {
               {/* Media Upload */}
               <div className="space-y-2">
                 <Label htmlFor="media" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Upload className="h-5 w-5 text-green-600" />
+                  <Upload className="h-5 w-5 text-[#00EF8C]" />
                   Upload Image/Video (Optional)
                 </Label>
-                <div className="border-4 border-dashed border-green-200 rounded-lg p-8 text-center hover:border-green-400 transition-colors cursor-pointer bg-green-50">
+                <div className="border-2 border-dashed border-[#00EF8C] p-8 text-center hover:border-[#00D67D] transition-colors cursor-pointer bg-[#E6FFF8]">
                   <input
                     id="media"
                     type="file"
@@ -112,8 +112,8 @@ export default function CreatePage() {
                   <label htmlFor="media" className="cursor-pointer">
                     {formData.mediaFile ? (
                       <div className="space-y-2">
-                        <Upload className="h-12 w-12 mx-auto text-green-600" />
-                        <p className="font-semibold text-green-600">{formData.mediaFile.name}</p>
+                        <Upload className="h-12 w-12 mx-auto text-[#00EF8C]" />
+                        <p className="font-semibold text-[#00EF8C]">{formData.mediaFile.name}</p>
                         <p className="text-sm text-gray-500">Click to change</p>
                       </div>
                     ) : (
@@ -130,7 +130,7 @@ export default function CreatePage() {
               {/* Close Time */}
               <div className="space-y-2">
                 <Label htmlFor="closeTime" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-green-600" />
+                  <Calendar className="h-5 w-5 text-[#00EF8C]" />
                   Close Time
                 </Label>
                 <Input
@@ -138,7 +138,7 @@ export default function CreatePage() {
                   type="datetime-local"
                   value={formData.closeTime}
                   onChange={(e) => setFormData({ ...formData, closeTime: e.target.value })}
-                  className="text-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                  className="text-lg border border-gray-300 focus:border-[#00EF8C] focus:ring-2 focus:ring-[#00EF8C]/20"
                   required
                 />
                 <p className="text-sm text-gray-500">When should predictions close?</p>
@@ -147,7 +147,7 @@ export default function CreatePage() {
               {/* Min Stake */}
               <div className="space-y-2">
                 <Label htmlFor="minStake" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Coins className="h-5 w-5 text-green-600" />
+                  <Coins className="h-5 w-5 text-[#00EF8C]" />
                   Minimum Stake (FLOW)
                 </Label>
                 <Input
@@ -157,7 +157,7 @@ export default function CreatePage() {
                   min="0.1"
                   value={formData.minStake}
                   onChange={(e) => setFormData({ ...formData, minStake: e.target.value })}
-                  className="text-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                  className="text-lg border border-gray-300 focus:border-[#00EF8C] focus:ring-2 focus:ring-[#00EF8C]/20"
                   required
                 />
                 <p className="text-sm text-gray-500">Minimum amount users can bet</p>
@@ -166,7 +166,7 @@ export default function CreatePage() {
               {/* Creator Fee */}
               <div className="space-y-2">
                 <Label htmlFor="creatorFee" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                  <Percent className="h-5 w-5 text-green-600" />
+                  <Percent className="h-5 w-5 text-[#00EF8C]" />
                   Creator Fee (%)
                 </Label>
                 <Input
@@ -177,16 +177,16 @@ export default function CreatePage() {
                   max="20"
                   value={formData.creatorFee}
                   onChange={(e) => setFormData({ ...formData, creatorFee: e.target.value })}
-                  className="text-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                  className="text-lg border border-gray-300 focus:border-[#00EF8C] focus:ring-2 focus:ring-[#00EF8C]/20"
                   required
                 />
                 <p className="text-sm text-gray-500">Your earnings from total pool (max 20%)</p>
               </div>
 
               {/* Estimated Earnings */}
-              <div className="bg-green-50 border-2 border-green-300 rounded-lg p-4">
+              <div className="bg-[#E6FFF8] border border-[#00EF8C] p-4">
                 <p className="text-sm text-gray-600 mb-1">Estimated earnings (if pool reaches 100 FLOW):</p>
-                <p className="text-3xl font-bold text-green-700">
+                <p className="text-3xl font-bold text-[#00EF8C]">
                   {(100 * parseFloat(formData.creatorFee) / 100).toFixed(2)} FLOW
                 </p>
               </div>
@@ -195,7 +195,7 @@ export default function CreatePage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full h-16 text-xl font-black bg-green-500 hover:bg-green-600 text-white shadow-lg hover:shadow-xl neon-glow transition-all duration-200 rounded-lg"
+                className="w-full h-16 text-xl font-black bg-[#00EF8C] hover:bg-[#00D67D] text-black shadow-lg hover:shadow-xl glow-green transition-all duration-200"
               >
                 {loading ? (
                   "Creating Market..."
@@ -212,38 +212,38 @@ export default function CreatePage() {
 
           {/* Tips Sidebar */}
           <div className="lg:col-span-1 space-y-4">
-            <div className="square-box p-6">
+            <div className="block-card p-6">
               <h3 className="font-bold text-xl text-gray-900 mb-4">💡 Tips</h3>
             <ul className="space-y-2 text-sm text-gray-700">
               <li className="flex items-start gap-2">
-                <span className="text-green-500 font-bold">✓</span>
+                <span className="text-[#00EF8C] font-bold">✓</span>
                 <span>Make questions clear and verifiable (sports stats work best!)</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 font-bold">✓</span>
+                <span className="text-[#00EF8C] font-bold">✓</span>
                 <span>Set close time before the event happens</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 font-bold">✓</span>
+                <span className="text-[#00EF8C] font-bold">✓</span>
                 <span>Lower min stake = more participants</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 font-bold">✓</span>
+                <span className="text-[#00EF8C] font-bold">✓</span>
                 <span>Add engaging media to attract more bets</span>
               </li>
             </ul>
             </div>
 
-            <div className="square-box p-6">
+            <div className="block-card p-6">
               <h3 className="font-bold text-xl text-gray-900 mb-4">📊 Preview</h3>
               <div className="space-y-3">
-                <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-200">
+                <div className="bg-gray-50 p-3 border border-gray-300">
                   <p className="text-xs text-gray-600">Min Stake</p>
-                  <p className="text-lg font-bold text-green-600">{formData.minStake} FLOW</p>
+                  <p className="text-lg font-bold text-[#00EF8C]">{formData.minStake} FLOW</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-200">
+                <div className="bg-gray-50 p-3 border border-gray-300">
                   <p className="text-xs text-gray-600">Creator Fee</p>
-                  <p className="text-lg font-bold text-green-600">{formData.creatorFee}%</p>
+                  <p className="text-lg font-bold text-[#00EF8C]">{formData.creatorFee}%</p>
                 </div>
               </div>
             </div>
