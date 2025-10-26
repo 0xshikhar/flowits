@@ -36,12 +36,32 @@ export default function CreatePage() {
     try {
       const closeTimeUnix = new Date(formData.closeTime).getTime() / 1000
 
-      await createMarket({
+      const result = await createMarket({
         question: formData.question,
         closeTime: closeTimeUnix,
         minStake: formData.minStake,
         creatorFeePercent: formData.creatorFee,
       })
+
+      // Extract market ID from events
+      const marketCreatedEvent = result.events?.find((e: any) => e.type.includes("MarketCreated"))
+      const marketId = marketCreatedEvent?.data?.marketId
+
+      if (marketId) {
+        // Sync with database
+        await fetch("/api/markets", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            marketId: parseInt(marketId),
+            creatorAddress: result.authorizers[0],
+            question: formData.question,
+            closeTime: closeTimeUnix,
+            minStake: formData.minStake,
+            creatorFeePercent: formData.creatorFee,
+          }),
+        })
+      }
 
       toast.success("Market created successfully! 🎉")
       router.push("/feed")
