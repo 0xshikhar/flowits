@@ -15,17 +15,293 @@ datasource db {
 
 
 model User {
-  id            String    @id @default(cuid())
-  walletAddress String    @unique
-  createdAt     DateTime  @default(now())
-  lastLoginAt   DateTime? @updatedAt
+  id              String   @id @default(cuid())
+  walletAddress   String   @unique
+  username        String?  @unique
+  bio             String?
+  avatar          String?  // Cloudinary URL or ENS avatar
+  isAdmin         Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-   // User profile information
-  username     String?   @unique
-  avatar       String?   // IPFS hash or URL
-  bio          String?
-  NFTid      String?
+  // Stats
+  totalPredictions    Int     @default(0)
+  correctPredictions  Int     @default(0)
+  totalEarnings       Decimal @default(0) @db.Decimal(18, 6)
+  battleWins          Int     @default(0)
+  battleLosses        Int     @default(0)
+  currentStreak       Int     @default(0)
+  longestStreak       Int     @default(0)
+
+  // Relations
+  posts            Post[]
+  predictions      Prediction[]
+  battlesCreated   Battle[]        @relation("BattleCreator")
+  battlesOpponent  Battle[]        @relation("BattleOpponent")
+  battleBets       BattleBet[]
+  achievements     Achievement[]
+  followers        Follow[]        @relation("UserFollowers")
+  following        Follow[]        @relation("UserFollowing")
+  notifications    Notification[]
 
   @@index([walletAddress])
+  @@index([username])
+}
+
+model Post {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Content
+  mediaUrl        String   // Cloudinary URL (image or video)
+  mediaType       String   // "image" or "video"
+  thumbnailUrl    String?  // For video thumbnails
+  caption         String   @db.Text
+  
+  // NFT Attachment (optional)
+  nftContractAddr String?
+  nftTokenId      String?
+  nftChainId      Int?
+  nftImageUrl     String?
+  nftName         String?
+
+  // Prediction Details
+  question        String   @db.Text
+  marketType      String   // "binary" (yes/no), "scalar" (number guess), "categorical" (multiple choice)
+  closeTime       DateTime
+  minStake        Decimal  @db.Decimal(18, 6)
+  maxStake        Decimal  @db.Decimal(18, 6)
+  creatorFeePercent Decimal @default(5) @db.Decimal(5, 2) // 5.00 = 5%
+
+  // Blockchain
+  contractAddress String?  // PredictionMarket contract address
+  marketId        String?  // On-chain market ID
+
+  // Status
+  status          String   @default("active") // "active", "closed", "resolved", "cancelled"
+  isResolved      Boolean  @default(false)
+  winningOutcome  String?  // "yes", "no", or specific value
+  resolvedAt      DateTime?
+  resolvedBy      String?  // Admin wallet address
+
+  // Volume Tracking
+  totalVolume     Decimal  @default(0) @db.Decimal(18, 6)
+  yesVolume       Decimal  @default(0) @db.Decimal(18, 6)
+  noVolume        Decimal  @default(0) @db.Decimal(18, 6)
+  uniquePredictors Int    @default(0)
+
+  // Engagement
+  views           Int      @default(0)
+  likes           Int      @default(0)
+  comments        Int      @default(0)
+  shares          Int      @default(0)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  predictions     Prediction[]
+  postComments    Comment[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([closeTime])
+  @@index([createdAt])
+}
+
+model Prediction {
+  id              String   @id @default(cuid())
+  postId          String
+  post            Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Prediction Data
+  outcome         String   // "yes", "no", or specific value
+  amount          Decimal  @db.Decimal(18, 6)
+  potentialWin    Decimal  @db.Decimal(18, 6) // Calculated at time of prediction
+  
+  // Blockchain
+  txHash          String?  // Transaction hash
+  
+  // Status
+  status          String   @default("pending") // "pending", "won", "lost", "refunded"
+  claimed         Boolean  @default(false)
+  claimedAmount   Decimal? @db.Decimal(18, 6)
+  claimedAt       DateTime?
+
+  createdAt       DateTime @default(now())
+
+  @@index([postId])
+  @@index([userId])
+  @@index([status])
+  @@unique([postId, userId]) // One prediction per user per post
+}
+
+model Battle {
+  id              String   @id @default(cuid())
+  
+  // Participants
+  creatorId       String
+  creator         User     @relation("BattleCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  opponentId      String?
+  opponent        User?    @relation("BattleOpponent", fields: [opponentId], references: [id], onDelete: SetNull)
+
+  // NFT Stakes
+  creatorNFTAddr  String
+  creatorNFTId    String
+  creatorNFTImage String?
+  creatorNFTName  String?
+  
+  opponentNFTAddr  String?
+  opponentNFTId    String?
+  opponentNFTImage String?
+  opponentNFTName  String?
+
+  // Battle Configuration
+  battleType      String   // "1v1", "collection_showdown", "squad_battle"
+  condition       String   @db.Text // Description of win condition
+  conditionType   String   // "player_stats", "price_movement", "community_vote"
+  closeTime       DateTime
+  
+  // Blockchain
+  contractAddress String?
+  battleId        String?  // On-chain battle ID
+  escrowTxHash    String?
+
+  // Status
+  status          String   @default("pending") // "pending", "active", "resolved", "cancelled"
+  winner          String?  // "creator" or "opponent"
+  resolvedAt      DateTime?
+  resolvedBy      String?
+
+  // Community Betting
+  bettingEnabled  Boolean  @default(true)
+  totalPool       Decimal  @default(0) @db.Decimal(18, 6)
+  creatorPool     Decimal  @default(0) @db.Decimal(18, 6)
+  opponentPool    Decimal  @default(0) @db.Decimal(18, 6)
+
+  // Engagement
+  views           Int      @default(0)
+  bettorsCount    Int      @default(0)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  bets            BattleBet[]
+
+  @@index([creatorId])
+  @@index([opponentId])
+  @@index([status])
+  @@index([closeTime])
+}
+
+model BattleBet {
+  id              String   @id @default(cuid())
+  battleId        String
+  battle          Battle   @relation(fields: [battleId], references: [id], onDelete: Cascade)
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Bet Data
+  side            String   // "creator" or "opponent"
+  amount          Decimal  @db.Decimal(18, 6)
+  potentialWin    Decimal  @db.Decimal(18, 6)
+
+  // Blockchain
+  txHash          String?
+
+  // Status
+  status          String   @default("pending") // "pending", "won", "lost", "refunded"
+  claimed         Boolean  @default(false)
+  claimedAmount   Decimal? @db.Decimal(18, 6)
+  claimedAt       DateTime?
+
+  createdAt       DateTime @default(now())
+
+  @@index([battleId])
+  @@index([userId])
+  @@unique([battleId, userId]) // One bet per user per battle
+}
+
+model Achievement {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Achievement Data
+  type            String   // "hot_streak", "diamond_hands", "whale", etc.
+  name            String
+  description     String
+  tier            String   // "bronze", "silver", "gold", "legendary"
+  iconUrl         String?
+
+  // Blockchain (if minted as NFT)
+  nftTokenId      String?  @unique
+  nftTxHash       String?
+
+  unlockedAt      DateTime @default(now())
+
+  @@index([userId])
+  @@index([type])
+}
+
+model Follow {
+  id              String   @id @default(cuid())
+  followerId      String
+  follower        User     @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId     String
+  following       User     @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime @default(now())
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model Comment {
+  id              String   @id @default(cuid())
+  postId          String
+  post            Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId          String
+  walletAddress   String   // Denormalized for quick lookup
+  username        String?
+  avatar          String?
+  
+  content         String   @db.Text
+  
+  createdAt       DateTime @default(now())
+
+  @@index([postId])
+  @@index([userId])
+}
+
+model Notification {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type            String   // "prediction_won", "battle_challenge", "new_follower", "achievement_unlocked"
+  title           String
+  message         String   @db.Text
+  actionUrl       String?  // Link to relevant page
+  
+  read            Boolean  @default(false)
+  
+  createdAt       DateTime @default(now())
+
+  @@index([userId, read])
+  @@index([createdAt])
+}
+
+model LeaderboardCache {
+  id              String   @id @default(cuid())
+  category        String   @unique // "accuracy", "earnings", "battles", "streak"
+  data            Json     // Cached leaderboard data
+  updatedAt       DateTime @default(now())
+
+  @@index([category])
 }
 
