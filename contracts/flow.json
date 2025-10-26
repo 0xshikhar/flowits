@@ -162,11 +162,12 @@
 			]
 		},
 		"testnet": {
-			"emulator-account": [
+			"test-account": [
 				"PredictionMarket",
 				"PredictionActions",
+				"NFTBattle",
 				"AchievementNFT",
-				"NFTBattle"
+				"ExampleConnectors"
 			]
 		}
 	}

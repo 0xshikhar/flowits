@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AuthButton } from "./AuthButton";
 
 export default function InstructionsComponent() {
 	return (
@@ -34,8 +33,6 @@ export default function InstructionsComponent() {
 							>
 								Give a Star on Github
 							</Button>
-
-							<AuthButton />
 						</div>
 					</div>
 

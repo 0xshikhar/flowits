@@ -2,68 +2,197 @@
 @tailwind components;
 @tailwind utilities;
 
-  @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 240 10% 3.9%;
-      --card: 0 0% 100%;
-      --card-foreground: 240 10% 3.9%;
-      --popover: 0 0% 100%;
-      --popover-foreground: 240 10% 3.9%;
-      --primary: 240 5.9% 10%;
-      --primary-foreground: 0 0% 98%;
-      --secondary: 240 4.8% 95.9%;
-      --secondary-foreground: 240 5.9% 10%;
-      --muted: 240 4.8% 95.9%;
-      --muted-foreground: 240 3.8% 46.1%;
-      --accent: 240 4.8% 95.9%;
-      --accent-foreground: 240 5.9% 10%;
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 0 0% 98%;
-      --border: 240 5.9% 90%;
-      --input: 240 5.9% 90%;
-      --ring: 240 10% 3.9%;
-      --radius: 0.5rem;
-      --chart-1: 12 76% 61%;
-      --chart-2: 173 58% 39%;
-      --chart-3: 197 37% 24%;
-      --chart-4: 43 74% 66%;
-      --chart-5: 27 87% 67%;
-    }
-
-    .dark {
-      --background: 240 10% 3.9%;
-      --foreground: 0 0% 98%;
-      --card: 240 10% 3.9%;
-      --card-foreground: 0 0% 98%;
-      --popover: 240 10% 3.9%;
-      --popover-foreground: 0 0% 98%;
-      --primary: 0 0% 98%;
-      --primary-foreground: 240 5.9% 10%;
-      --secondary: 240 3.7% 15.9%;
-      --secondary-foreground: 0 0% 98%;
-      --muted: 240 3.7% 15.9%;
-      --muted-foreground: 240 5% 64.9%;
-      --accent: 240 3.7% 15.9%;
-      --accent-foreground: 0 0% 98%;
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 0 0% 98%;
-      --border: 240 3.7% 15.9%;
-      --input: 240 3.7% 15.9%;
-      --ring: 240 4.9% 83.9%;
-      --chart-1: 220 70% 50%;
-      --chart-2: 160 60% 45%;
-      --chart-3: 30 80% 55%;
-      --chart-4: 280 65% 60%;
-      --chart-5: 340 75% 55%;
-    }
+@layer base {
+  :root {
+    /* Futuristic Light Theme - Cream/Beige Base */
+    --background: 40 20% 97%;
+    --foreground: 20 10% 10%;
+    
+    /* Cards with subtle warmth */
+    --card: 40 25% 98%;
+    --card-foreground: 20 10% 10%;
+    
+    /* Popovers */
+    --popover: 40 25% 98%;
+    --popover-foreground: 20 10% 10%;
+    
+    /* Primary - Dark accent for text/buttons */
+    --primary: 20 15% 15%;
+    --primary-foreground: 40 20% 98%;
+    
+    /* Secondary - Soft beige */
+    --secondary: 40 15% 92%;
+    --secondary-foreground: 20 10% 10%;
+    
+    /* Muted elements */
+    --muted: 40 12% 90%;
+    --muted-foreground: 20 8% 45%;
+    
+    /* Accent - Warm highlight */
+    --accent: 35 50% 88%;
+    --accent-foreground: 20 10% 10%;
+    
+    /* Destructive */
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Borders - Subtle */
+    --border: 40 15% 88%;
+    --input: 40 15% 88%;
+    --ring: 20 15% 15%;
+    
+    /* Border radius */
+    --radius: 1rem;
+    
+    /* Custom colors for sports theme */
+    --win-green: 142 76% 36%;
+    --loss-red: 0 84% 60%;
+    --neutral-gray: 40 5% 60%;
+    --highlight-yellow: 45 93% 47%;
+    --accent-orange: 25 95% 53%;
   }
 
-  @layer base {
-    * {
-      @apply border-border;
+  .dark {
+    --background: 20 15% 8%;
+    --foreground: 40 20% 98%;
+    --card: 20 15% 10%;
+    --card-foreground: 40 20% 98%;
+    --popover: 20 15% 10%;
+    --popover-foreground: 40 20% 98%;
+    --primary: 40 20% 98%;
+    --primary-foreground: 20 15% 10%;
+    --secondary: 20 12% 15%;
+    --secondary-foreground: 40 20% 98%;
+    --muted: 20 10% 18%;
+    --muted-foreground: 40 10% 65%;
+    --accent: 35 40% 20%;
+    --accent-foreground: 40 20% 98%;
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 20 12% 18%;
+    --input: 20 12% 18%;
+    --ring: 40 20% 85%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Glassmorphism effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-xl;
+  }
+  
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-xl border border-white/10;
+  }
+  
+  /* Gradient backgrounds */
+  .gradient-warm {
+    background: linear-gradient(135deg, #faf8f3 0%, #f5f1e8 100%);
+  }
+  
+  .gradient-card {
+    background: linear-gradient(135deg, #ffffff 0%, #faf8f3 100%);
+  }
+  
+  /* Animated gradient border */
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #e8dcc8, #d4c4a8) border-box;
+    border: 2px solid transparent;
+  }
+  
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-2xl;
+  }
+  
+  /* Text gradients */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600;
+  }
+  
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-secondary rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
-    body {
-      @apply bg-background text-foreground;
+    to {
+      opacity: 1;
     }
   }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

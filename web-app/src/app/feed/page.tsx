@@ -68,18 +68,21 @@ export default function FeedPage() {
   const currentMarket = mockMarkets[currentIndex]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50">
+    <div className="min-h-screen gradient-warm">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b-4 border-purple-200 shadow-lg">
+      <header className="sticky top-0 z-50 glass border-b-2 border-border">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="h-10 w-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                <Trophy className="h-6 w-6 text-white" />
+            <div className="flex items-center gap-3">
+              <div className="h-12 w-12 bg-gradient-to-br from-orange-400 to-amber-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <Trophy className="h-7 w-7 text-white" />
               </div>
-              <h1 className="text-2xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                FlowBattle
-              </h1>
+              <div>
+                <h1 className="text-2xl font-black text-gradient">
+                  Moments
+                </h1>
+                <p className="text-xs text-muted-foreground font-medium">Prediction Markets</p>
+              </div>
             </div>
 
             <WalletConnect />
@@ -91,20 +94,20 @@ export default function FeedPage() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto space-y-6">
           {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white rounded-2xl p-4 border-2 border-purple-200 shadow-lg text-center">
-              <p className="text-3xl font-bold text-purple-600">{mockMarkets.length}</p>
-              <p className="text-sm text-gray-600 font-semibold">Active Markets</p>
+          <div className="grid grid-cols-3 gap-4 animate-slide-up">
+            <div className="glass rounded-2xl p-5 hover-lift text-center border-2 border-orange-200">
+              <p className="text-3xl font-bold text-gradient">{mockMarkets.length}</p>
+              <p className="text-sm text-muted-foreground font-semibold mt-1">Active Markets</p>
             </div>
-            <div className="bg-white rounded-2xl p-4 border-2 border-green-200 shadow-lg text-center">
-              <p className="text-3xl font-bold text-green-600">
+            <div className="glass rounded-2xl p-5 hover-lift text-center border-2 border-green-200">
+              <p className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {mockMarkets.reduce((sum, m) => sum + parseFloat(m.totalYesVolume) + parseFloat(m.totalNoVolume), 0).toFixed(0)}
               </p>
-              <p className="text-sm text-gray-600 font-semibold">Total FLOW</p>
+              <p className="text-sm text-muted-foreground font-semibold mt-1">Total FLOW</p>
             </div>
-            <div className="bg-white rounded-2xl p-4 border-2 border-orange-200 shadow-lg text-center">
-              <p className="text-3xl font-bold text-orange-600">{currentIndex + 1}/{mockMarkets.length}</p>
-              <p className="text-sm text-gray-600 font-semibold">Current</p>
+            <div className="glass rounded-2xl p-5 hover-lift text-center border-2 border-amber-200">
+              <p className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">{currentIndex + 1}/{mockMarkets.length}</p>
+              <p className="text-sm text-muted-foreground font-semibold mt-1">Current</p>
             </div>
           </div>
 
@@ -128,7 +131,7 @@ export default function FeedPage() {
                 onClick={handlePrevious}
                 disabled={currentIndex === 0}
                 size="lg"
-                className="bg-white border-2 border-purple-300 text-purple-600 hover:bg-purple-50 disabled:opacity-30 shadow-lg"
+                className="glass border-2 border-border hover:bg-secondary disabled:opacity-30 shadow-lg hover-lift font-semibold"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Previous
@@ -138,7 +141,7 @@ export default function FeedPage() {
                 onClick={handleNext}
                 disabled={currentIndex === mockMarkets.length - 1}
                 size="lg"
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white disabled:opacity-30 shadow-lg"
+                className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white disabled:opacity-30 shadow-xl hover-lift font-bold"
               >
                 Next
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -153,8 +156,8 @@ export default function FeedPage() {
                 key={idx}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   idx === currentIndex
-                    ? "w-8 bg-gradient-to-r from-purple-500 to-pink-500"
-                    : "w-2 bg-gray-300"
+                    ? "w-8 bg-gradient-to-r from-orange-500 to-amber-500 shadow-md"
+                    : "w-2 bg-muted"
                 }`}
               />
             ))}
@@ -163,25 +166,25 @@ export default function FeedPage() {
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t-4 border-purple-200 shadow-2xl">
+      <nav className="fixed bottom-0 left-0 right-0 glass border-t-2 border-border shadow-2xl pb-safe">
         <div className="container mx-auto px-4">
-          <div className="flex justify-around py-4">
+          <div className="flex justify-around py-3">
             <Link href="/feed">
-              <Button variant="ghost" className="flex-col h-auto gap-1 text-purple-600">
+              <Button variant="ghost" className="flex-col h-auto gap-1 text-orange-600 hover:bg-orange-50">
                 <Trophy className="h-6 w-6" />
                 <span className="text-xs font-semibold">Feed</span>
               </Button>
             </Link>
             <Link href="/create">
-              <Button variant="ghost" className="flex-col h-auto gap-1">
-                <div className="h-12 w-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center -mt-6 shadow-xl border-4 border-white">
-                  <Plus className="h-6 w-6 text-white" />
+              <Button variant="ghost" className="flex-col h-auto gap-1 hover:bg-transparent">
+                <div className="h-14 w-14 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center -mt-8 shadow-xl border-4 border-background hover:shadow-2xl transition-all hover:scale-105">
+                  <Plus className="h-7 w-7 text-white" />
                 </div>
-                <span className="text-xs font-semibold">Create</span>
+                <span className="text-xs font-semibold mt-1">Create</span>
               </Button>
             </Link>
             <Link href="/profile">
-              <Button variant="ghost" className="flex-col h-auto gap-1">
+              <Button variant="ghost" className="flex-col h-auto gap-1 hover:bg-secondary">
                 <User className="h-6 w-6" />
                 <span className="text-xs font-semibold">Profile</span>
               </Button>

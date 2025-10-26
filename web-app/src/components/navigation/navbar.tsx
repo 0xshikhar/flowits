@@ -7,7 +7,6 @@ import { AiOutlineSearch, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 import { cn } from "@/lib/utils";
-import { AuthButton } from "@/components/AuthButton";
 
 const Navbar = () => {
 	const router = useRouter();
@@ -70,9 +69,6 @@ const Navbar = () => {
 						onClick={() => router.push("/token")}
 					>
 						<MdOutlineAccountBalanceWallet className="mr-2" /> Token
-					</div>
-					<div className="px-4">
-						<AuthButton />
 					</div>
 				</div>
 
@@ -141,9 +137,6 @@ const Navbar = () => {
 					</div>
 					<div className="text-[#c8cacd] hover:text-white cursor-pointer font-bold py-2 flex items-center">
 						<MdOutlineAccountBalanceWallet className="mr-2" /> Wallet
-					</div>
-					<div className="py-2">
-						<AuthButton />
 					</div>
 				</div>
 			</div>
