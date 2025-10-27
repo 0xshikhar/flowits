@@ -92,11 +92,11 @@ export function PredictionCard({
 
         {/* Time & Stats */}
         <div className="flex items-center gap-3 text-sm">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-50 border-2 border-green-300">
+          <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border-2 border-green-300">
             <Clock className="h-4 w-4 text-green-600" />
             <span className="font-bold text-green-900">{hoursLeft}h {minutesLeft}m</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border-2 border-gray-300">
+          <div className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300">
             <Users className="h-4 w-4 text-gray-600" />
             <span className="font-bold text-gray-900">{Math.floor(totalVolume / parseFloat(minStake))}</span>
           </div>
@@ -108,7 +108,7 @@ export function PredictionCard({
             <span className="text-green-600">YES {yesPercent.toFixed(0)}%</span>
             <span className="text-red-600">NO {noPercent.toFixed(0)}%</span>
           </div>
-          <div className="h-6 bg-gray-200 rounded-lg overflow-hidden flex border-2 border-gray-300">
+          <div className="h-6 bg-gray-200 overflow-hidden flex border-2 border-gray-300">
             <div
               className="bg-green-500 transition-all duration-500 flex items-center justify-center text-white text-xs font-bold"
               style={{ width: `${yesPercent}%` }}
@@ -128,7 +128,7 @@ export function PredictionCard({
         <div className="grid grid-cols-2 gap-4">
           <Button
             onClick={() => setSelectedOutcome("yes")}
-            className={`h-20 text-xl font-black transition-all duration-200 rounded-lg ${
+            className={`h-20 text-xl font-black transition-all duration-200 ${
               selectedOutcome === "yes"
                 ? "bg-green-500 text-white scale-105 shadow-xl neon-glow border-2 border-green-400"
                 : "bg-white text-green-600 hover:bg-green-50 border-2 border-green-500 shadow-lg"
@@ -139,7 +139,7 @@ export function PredictionCard({
           </Button>
           <Button
             onClick={() => setSelectedOutcome("no")}
-            className={`h-20 text-xl font-black transition-all duration-200 rounded-lg ${
+            className={`h-20 text-xl font-black transition-all duration-200 ${
               selectedOutcome === "no"
                 ? "bg-red-500 text-white scale-105 shadow-xl border-2 border-red-400"
                 : "bg-white text-red-600 hover:bg-red-50 border-2 border-red-500 shadow-lg"
@@ -153,14 +153,14 @@ export function PredictionCard({
         {/* Amount Input */}
         {selectedOutcome && (
           <div className="space-y-4 animate-slide-up">
-            <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg border-2 border-gray-300">
+            <div className="flex items-center gap-3 bg-gray-50 p-4 border-2 border-gray-300">
               <input
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 min={minStake}
                 step="0.1"
-                className="flex-1 px-4 py-3 bg-white border-2 border-gray-300 rounded-lg font-bold text-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                className="flex-1 px-4 py-3 bg-white border-2 border-gray-300 font-bold text-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
                 placeholder="Amount"
               />
               <span className="font-black text-green-600 text-lg">FLOW</span>
@@ -169,7 +169,7 @@ export function PredictionCard({
             <Button
               onClick={handlePredict}
               disabled={loading}
-              className="w-full h-16 text-xl font-black bg-green-500 hover:bg-green-600 text-white shadow-xl hover:shadow-2xl neon-glow transition-all duration-200 rounded-lg"
+              className="w-full h-16 text-xl font-black bg-green-500 hover:bg-green-600 text-white shadow-xl hover:shadow-2xl neon-glow transition-all duration-200"
             >
               {loading ? (
                 "Placing Prediction..."
