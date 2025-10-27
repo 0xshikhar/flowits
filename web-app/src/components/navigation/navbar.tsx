@@ -70,7 +70,7 @@ const Navbar = () => {
 					<WalletConnect />
 					<button
 						onClick={toggleMenu}
-						className="text-gray-700 text-2xl focus:outline-none p-2 hover:bg-gray-100 rounded-lg"
+						className="text-gray-700 text-2xl focus:outline-none p-2 hover:bg-gray-100"
 					>
 						{isMenuOpen ? <X /> : <Menu />}
 					</button>
@@ -94,7 +94,7 @@ const Navbar = () => {
 								href={item.path}
 								onClick={() => setIsMenuOpen(false)}
 								className={cn(
-									"flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all duration-200",
+									"flex items-center gap-3 px-4 py-3 font-bold transition-all duration-200",
 									isActive
 										? "bg-[#a4ff31] text-black neon-glow"
 										: "bg-gray-50 text-gray-700 hover:bg-[#e8ffe0] border-2 border-gray-200"
