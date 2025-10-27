@@ -1,10 +1,28 @@
 import Link from "next/link"
 import { ArrowRight, Zap, Trophy, TrendingUp, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { WalletConnect } from "@/components/WalletConnect"
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-6 md:p-10">
+    <div className="min-h-screen bg-gradient-to-b from-[#FFFEE8] to-[#F6FCE5]">
+      {/* Navbar */}
+      <nav className="border-b border-gray-400 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-[#a4ff31] flex items-center justify-center neon-glow">
+              <span className="text-black text-2xl font-bold">M</span>
+            </div>
+            <div>
+              <div className="text-xl font-bold text-foreground">Moments</div>
+              <div className="text-xs font-semibold text-[#a4ff31]">Predict & Win</div>
+            </div>
+          </Link>
+          <WalletConnect />
+        </div>
+      </nav>
+
+      <main className="p-6 md:p-10">
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto mb-12">
         <div className="text-center space-y-6 animate-fade-in">
@@ -100,6 +118,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </div>
   )
 }
