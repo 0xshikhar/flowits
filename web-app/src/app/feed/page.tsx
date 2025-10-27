@@ -68,9 +68,8 @@ export default function FeedPage() {
   const currentMarket = mockMarkets[currentIndex]
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="min-h-screen p-6 md:p-10">
+      <main className="max-w-7xl mx-auto">
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-black text-gray-900 mb-2">Live Predictions</h1>
