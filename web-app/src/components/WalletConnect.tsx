@@ -86,7 +86,7 @@ export function WalletConnect() {
         onClick={disconnect}
         variant="outline"
         size="icon"
-        className="border-2 border-gray-300 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg"
+        className="border-2 border-gray-300 hover:bg-red-50 hover:border-red-400 transition-all duration-200"
       >
         <LogOut className="h-4 w-4 text-red-600" />
       </Button>
