@@ -97,7 +97,23 @@
   }
   
   .block-card-primary {
-    @apply bg-white border border-[#00EF8C] shadow-lg shadow-[#00EF8C]/10 rounded-none;
+    @apply bg-white border border-[#a4ff31] shadow-lg shadow-[#a4ff31]/10 rounded-none;
+  }
+  
+  /* Dual block card system - inspired by nexusfi */
+  .dual-block-card {
+    @apply bg-white border border-gray-800 shadow-lg rounded-none relative;
+  }
+  
+  .dual-block-card::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: 4px;
+    bottom: 4px;
+    border: 1px solid #e5e5e5;
+    pointer-events: none;
   }
   
   /* Gradient backgrounds - Neon Green #a4ff31 */
