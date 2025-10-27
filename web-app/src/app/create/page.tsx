@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { WalletConnect } from "@/components/WalletConnect"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -12,10 +12,12 @@ import Link from "next/link"
 import { createMarket } from "@/lib/flow/transactions"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { fcl } from "@/lib/flow/config"
 
 export default function CreatePage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState<any>({ loggedIn: false })
   const [formData, setFormData] = useState({
     question: "",
     closeTime: "",
@@ -23,6 +25,10 @@ export default function CreatePage() {
     creatorFee: "5.0",
     mediaFile: null as File | null,
   })
+
+  useEffect(() => {
+    fcl.currentUser.subscribe(setUser)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -47,14 +53,14 @@ export default function CreatePage() {
       const marketCreatedEvent = result.events?.find((e: any) => e.type.includes("MarketCreated"))
       const marketId = marketCreatedEvent?.data?.marketId
 
-      if (marketId) {
+      if (marketId && user?.addr) {
         // Sync with database
         await fetch("/api/markets", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             marketId: parseInt(marketId),
-            creatorAddress: result.authorizers[0],
+            creatorAddress: user.addr,
             question: formData.question,
             closeTime: closeTimeUnix,
             minStake: formData.minStake,
