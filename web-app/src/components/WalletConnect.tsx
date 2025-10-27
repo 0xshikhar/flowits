@@ -60,7 +60,7 @@ export function WalletConnect() {
       <Button
         onClick={connect}
         disabled={loading}
-        className="bg-[#a4ff31] hover:bg-[#b8ff52] text-black font-bold shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg neon-glow border-2 border-[#a4ff31]"
+        className="bg-[#a4ff31] hover:bg-[#b8ff52] text-black font-bold shadow-lg hover:shadow-xl transition-all duration-200 neon-glow border-2 border-[#a4ff31]"
       >
         <Wallet className="mr-2 h-4 w-4" />
         {loading ? "Connecting..." : "Connect"}
@@ -70,13 +70,13 @@ export function WalletConnect() {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex items-center gap-2 bg-[#e8ffe0] px-3 py-2 rounded-lg border-2 border-[#a4ff31] shadow-md">
+      <div className="flex items-center gap-2 bg-[#e8ffe0] px-3 py-2 border-2 border-[#a4ff31] shadow-md">
         <Coins className="h-4 w-4 text-black" />
         <span className="font-bold text-black text-sm">{balance}</span>
       </div>
       
-      <div className="hidden sm:flex items-center gap-2 bg-white px-3 py-2 rounded-lg border-2 border-gray-300 shadow-md">
-        <div className="h-2 w-2 bg-[#a4ff31] rounded-full animate-pulse" />
+      <div className="hidden sm:flex items-center gap-2 bg-white px-3 py-2 border-2 border-gray-300 shadow-md">
+        <div className="h-2 w-2 bg-[#a4ff31] animate-pulse" />
         <span className="font-mono text-xs text-gray-700">
           {user.addr?.slice(0, 6)}...{user.addr?.slice(-4)}
         </span>

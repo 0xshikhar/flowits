@@ -70,12 +70,12 @@ export default function Sidebar() {
           <div className="p-6">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 mb-8">
-              <div className="w-10 h-10 bg-[#00EF8C] flex items-center justify-center">
+              <div className="w-10 h-10 bg-[#a4ff31] flex items-center justify-center neon-glow">
                 <span className="text-black text-2xl font-bold">M</span>
               </div>
               <div>
                 <div className="text-xl font-bold text-foreground">Moments</div>
-                <div className="text-xs font-semibold text-[#00EF8C]">Predict & Win</div>
+                <div className="text-xs font-semibold text-[#a4ff31]">Predict & Win</div>
               </div>
             </Link>
 
@@ -91,7 +91,7 @@ export default function Sidebar() {
                       className={cn(
                         "w-full justify-start font-semibold",
                         isActive
-                          ? "bg-[#E6FFF8] text-black border border-[#00EF8C]"
+                          ? "bg-[#e8ffe0] text-black border border-[#a4ff31]"
                           : "hover:bg-gray-100"
                       )}
                     >

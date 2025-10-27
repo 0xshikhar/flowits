@@ -80,10 +80,10 @@ export default function FeedPage() {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Stats Sidebar */}
           <div className="lg:col-span-1 space-y-4">
-            <div className="square-box-green p-6 hover-lift">
+            <div className="dual-block-card p-6 hover-lift">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center neon-glow">
-                  <Trophy className="h-6 w-6 text-white" />
+                <div className="w-12 h-12 bg-[#a4ff31] flex items-center justify-center neon-glow">
+                  <Trophy className="h-6 w-6 text-black" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 font-semibold">Active Markets</p>
@@ -92,30 +92,30 @@ export default function FeedPage() {
               </div>
             </div>
 
-            <div className="square-box p-6 hover-lift">
+            <div className="dual-block-card p-6 hover-lift">
               <p className="text-sm text-gray-600 font-semibold mb-2">Total Volume</p>
-              <p className="text-3xl font-black text-gradient-green">
+              <p className="text-3xl font-black text-[#a4ff31]">
                 {mockMarkets.reduce((sum, m) => sum + parseFloat(m.totalYesVolume) + parseFloat(m.totalNoVolume), 0).toFixed(1)} FLOW
               </p>
             </div>
 
-            <div className="square-box p-6 hover-lift">
+            <div className="dual-block-card p-6 hover-lift">
               <p className="text-sm text-gray-600 font-semibold mb-2">Your Position</p>
               <p className="text-2xl font-bold text-gray-900">{currentIndex + 1} / {mockMarkets.length}</p>
             </div>
 
             {/* Quick Actions */}
-            <div className="square-box p-6">
+            <div className="dual-block-card p-6">
               <h3 className="font-bold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-2">
                 <Link href="/create">
-                  <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold shadow-lg neon-glow">
+                  <Button className="w-full bg-[#a4ff31] hover:bg-[#b8ff52] text-black font-bold shadow-lg neon-glow">
                     <Plus className="mr-2 h-4 w-4" />
                     Create Market
                   </Button>
                 </Link>
                 <Link href="/profile">
-                  <Button variant="outline" className="w-full border-2 border-gray-300 hover:border-green-400 hover:bg-green-50 font-bold">
+                  <Button variant="outline" className="w-full border border-gray-800 hover:border-[#a4ff31] hover:bg-[#e8ffe0] font-bold">
                     <User className="mr-2 h-4 w-4" />
                     View Profile
                   </Button>
@@ -148,7 +148,7 @@ export default function FeedPage() {
                 disabled={currentIndex === 0}
                 size="lg"
                 variant="outline"
-                className="border-2 border-gray-300 hover:border-green-500 hover:bg-green-50 disabled:opacity-30 font-bold px-8"
+                className="border border-gray-800 hover:border-[#a4ff31] hover:bg-[#e8ffe0] disabled:opacity-30 font-bold px-8"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Previous
@@ -159,9 +159,9 @@ export default function FeedPage() {
                 {mockMarkets.map((_, idx) => (
                   <div
                     key={idx}
-                    className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                    className={`h-3 transition-all duration-300 cursor-pointer ${
                       idx === currentIndex
-                        ? "w-8 bg-green-500 shadow-lg"
+                        ? "w-8 bg-[#a4ff31] shadow-lg"
                         : "w-3 bg-gray-300 hover:bg-gray-400"
                     }`}
                     onClick={() => {
@@ -179,7 +179,7 @@ export default function FeedPage() {
                 onClick={handleNext}
                 disabled={currentIndex === mockMarkets.length - 1}
                 size="lg"
-                className="bg-green-500 hover:bg-green-600 text-white disabled:opacity-30 font-bold px-8 neon-glow"
+                className="bg-[#a4ff31] hover:bg-[#b8ff52] text-black disabled:opacity-30 font-bold px-8 neon-glow"
               >
                 Next
                 <ArrowRight className="ml-2 h-5 w-5" />

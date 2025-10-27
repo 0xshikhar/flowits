@@ -27,7 +27,7 @@ const Navbar = () => {
 			<div className="max-w-7xl mx-auto flex items-center justify-between">
 				{/* Logo */}
 				<Link href="/" className="flex items-center gap-2">
-					<div className="w-10 h-10 bg-[#a4ff31] rounded-lg flex items-center justify-center neon-glow">
+					<div className="w-10 h-10 bg-[#a4ff31] flex items-center justify-center neon-glow">
 						<span className="text-black text-2xl font-bold">M</span>
 					</div>
 					<div className="hidden sm:block">
@@ -46,7 +46,7 @@ const Navbar = () => {
 								key={item.path}
 								href={item.path}
 								className={cn(
-									"flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition-all duration-200",
+									"flex items-center gap-2 px-4 py-2 font-bold transition-all duration-200",
 									isActive
 										? "bg-[#a4ff31] text-black shadow-lg neon-glow"
 										: "bg-gray-50 text-gray-700 hover:bg-[#e8ffe0] border-2 border-gray-200"
