@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
                 walletAddress: userData.walletAddress,
                 username: userData.username,
                 createdAt: userData.createdAt,
-                lastLoginAt: userData.lastLoginAt,
+                updatedAt: userData.updatedAt,
                 // Include other fields as needed
             }
         });
